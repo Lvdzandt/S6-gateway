@@ -23,7 +23,7 @@ services:
 
   gateway:
     build:
-     context: "../Gateway/"
+     context: "../S6-gateway/"
      dockerfile: "Dockerfile"
     hostname: gateway
     container_name: gateway
@@ -39,7 +39,7 @@ services:
 
   user-service:
     build:
-      context: "../userapi/"
+      context: "../S6-userapi/"
       dockerfile: "Dockerfile"
     hostname: user-service
     container_name: user-service
@@ -57,7 +57,7 @@ services:
 
   frontend-gateway:
     build:
-      context: "../frontend/"
+      context: "../S6-frontend/"
       dockerfile: "Dockerfile"
     hostname: frontend
     container_name: frontend

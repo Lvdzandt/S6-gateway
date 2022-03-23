@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: userapi-ingress
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /userapi
+            pathType: Prefix
+            backend:
+              service:
+                name: userapi-service
+                port:
+                  number: 80
