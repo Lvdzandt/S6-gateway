@@ -21,12 +21,29 @@ services:
     volumes:
       - my-db:/var/lib/mysql
 
+  gateway:
+    build:
+     context: "../Gateway/"
+     dockerfile: "Dockerfile"
+    hostname: gateway
+    container_name: gateway
+    restart: "on-failure"
+    ports:
+      - "8083:8083"
+    environment:
+      - spring.cloud.gateway.routes[0].id=userapi
+      - spring.cloud.gateway.routes[0].uri=http://user-service:8081/
+      - spring.cloud.gateway.routes[0].predicates[0]=Path=/user/**
+    depends_on:
+      - db
+
   user-service:
     build:
       context: "../userapi/"
       dockerfile: "Dockerfile"
-    hostname: UserApi
-    container_name: UserApi
+    hostname: user-service
+    container_name: user-service
+    restart: "on-failure"
     ports:
       - "8081:8081"
     environment:
@@ -34,9 +51,9 @@ services:
      - SPRING_DATASOURCE_USERNAME=root
      - SPRING_DATASOURCE_PASSWORD=password
      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-         }'
     depends_on:
       - db
+      - gateway
 
   frontend-gateway:
     build:
@@ -48,7 +65,6 @@ services:
       - "8080:8080"
     depends_on:
       - user-service
-
 
 volumes:
   my-db:
