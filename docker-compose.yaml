@@ -21,9 +21,29 @@ services:
     volumes:
       - my-db:/var/lib/mysql
 
+  subreddit-db:
+    image: "mysql:latest"
+    environment:
+      MYSQL_DATABASE: 'mysql'
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: 'user'
+      # You can use whatever password you like
+      MYSQL_PASSWORD: 'password'
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '3305:3306'
+    expose:
+      # Opens port 3305 on the container
+      - '3305'
+      # Where our data will be persisted
+    volumes:
+      - subreddit-db:/var/lib/mysql
+
   gateway:
     build:
-     context: "../S6-gateway/"
+     context: "../gateway/"
      dockerfile: "Dockerfile"
     hostname: gateway
     container_name: gateway
@@ -34,12 +54,15 @@ services:
       - spring.cloud.gateway.routes[0].id=userapi
       - spring.cloud.gateway.routes[0].uri=http://user-service:8081/
       - spring.cloud.gateway.routes[0].predicates[0]=Path=/user/**
+      - spring.cloud.gateway.routes[1].id=subredditapi
+      - spring.cloud.gateway.routes[1].uri=http://subredditapi-service:8086/
+      - spring.cloud.gateway.routes[1].predicates[0]=Path=/subreddit/**
     depends_on:
       - db
 
   user-service:
     build:
-      context: "../S6-userapi/"
+      context: "../userapi/"
       dockerfile: "Dockerfile"
     hostname: user-service
     container_name: user-service
@@ -55,16 +78,35 @@ services:
       - db
       - gateway
 
+  subredditapi-service:
+    build:
+      context: "../SubRedditapi/"
+      dockerfile: "Dockerfile"
+    hostname: subreddit-service
+    container_name: subreddit-service
+    restart: "on-failure"
+    ports:
+      - "8086:8086"
+    environment:
+     - SPRING_DATASOURCE_URL=jdbc:mysql://subreddit-db:3306/mysql
+     - SPRING_DATASOURCE_USERNAME=root
+     - SPRING_DATASOURCE_PASSWORD=password
+     - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - subreddit-db
+
   frontend-gateway:
     build:
-      context: "../S6-frontend/"
+      context: "../frontend/"
       dockerfile: "Dockerfile"
     hostname: frontend
     container_name: frontend
     ports:
       - "8080:8080"
     depends_on:
+      - subredditapi-service
       - user-service
 
 volumes:
   my-db:
+  subreddit-db:

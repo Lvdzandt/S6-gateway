@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: userapi
+  name: subredditapi
   labels:
-    app: userapi
+    app: subredditapi
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: userapi
+      app: subredditapi
   template:
     metadata:
       labels:
-        app: userapi
+        app: subredditapi
     spec:
       containers:
         - name: userapi
-          image: localhost:5000/api:v0.1
+          image: localhost:5000/subredditapi:v0.1
           ports:
-            - containerPort: 8081
+            - containerPort: 8086
           env:
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:mysql://mysql:3306/mysql
+              value: jdbc:mysql://mysql:3307/mysql
             - name: SPRING_DATASOURCE_USERNAME
               value: root
             - name: SPRING_DATASOURCE_PASSWORD

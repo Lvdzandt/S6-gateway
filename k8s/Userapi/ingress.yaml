@@ -3,13 +3,8 @@ kind: Ingress
 metadata:
   name: userapi-ingress
 spec:
-  rules:
-    - http:
-        paths:
-          - path: /userapi
-            pathType: Prefix
-            backend:
-              service:
-                name: userapi-service
-                port:
-                  number: 80
+  defaultBackend:
+    service:
+      name: userapi-service
+      port:
+        number: 8081

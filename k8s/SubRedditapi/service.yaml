@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: userapi-service
+  name: subredditapi-service
 spec:
   type: NodePort
   selector:
-    app: userapi
+    app: subredditapi
   ports:
     - protocol: TCP
-      port: 8081
-      targetPort: 8081
+      port: 8086
+      targetPort: 8086
