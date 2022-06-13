@@ -60,6 +60,25 @@ services:
     depends_on:
       - db
 
+  zookeeper:
+    image: zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      - ALLOW_ANONYMOUS_lOGIN=yes
+
+  kafka:
+    image: bitnami/kafka
+    container_name: kafka
+    ports:
+      - "9200:9200"
+    environment:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+
   user-service:
     build:
       context: "../userapi/"
@@ -74,6 +93,7 @@ services:
      - SPRING_DATASOURCE_USERNAME=root
      - SPRING_DATASOURCE_PASSWORD=password
      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+     - SPRING_KAFKA_BOOTSTRAP-SERVERS=http://kafka:9092
     depends_on:
       - db
       - gateway
@@ -92,6 +112,7 @@ services:
      - SPRING_DATASOURCE_USERNAME=root
      - SPRING_DATASOURCE_PASSWORD=password
      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+     - SPRING_KAFKA_BOOTSTRAP-SERVERS=http://kafka:9092
     depends_on:
       - subreddit-db
 
@@ -103,6 +124,8 @@ services:
     container_name: frontend
     ports:
       - "8080:8080"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
     depends_on:
       - subredditapi-service
       - user-service
