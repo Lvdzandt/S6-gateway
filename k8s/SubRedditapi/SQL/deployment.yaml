@@ -21,7 +21,7 @@ spec:
             - name: MYSQL_ROOT_PASSWORD
               value: password
           ports:
-            - containerPort: 3307
+            - containerPort: 3306
               name: subredditmysql
           volumeMounts:
             - name: subredditmysql-persistent-storage
@@ -40,7 +40,7 @@ spec:
   selector:
     app: subredditmysql
   ports:
-    - port: 3307
-      targetPort: 3307
+    - port: 3306
+      targetPort: 3306
       nodePort: 30004
 ---
