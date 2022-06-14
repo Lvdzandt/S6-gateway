@@ -1,0 +1,51 @@
+on: [push]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    
+    - uses: azure/docker-login@v1
+      with:
+        login-server: s6project.azurecr.io
+        username: ${{ secrets.acr_s6project_username }}
+        password: ${{ secrets.acr_s6project_password }}
+    
+    - name: Build and push image to ACR
+      id: build-image
+      run: |
+        docker build "$GITHUB_WORKSPACE/" -f  "Dockerfile" -t s6project.azurecr.io/s6azure:${{ github.sha }} --label dockerfile-path=Dockerfile
+        docker push s6project.azurecr.io/s6azure:${{ github.sha }}
+    
+    - uses: azure/k8s-set-context@v1
+      with:
+         kubeconfig: ${{ secrets.aks_s6azure_kubeConfig }}
+      id: login
+    
+    - name: Create namespace
+      run: |
+        namespacePresent=`kubectl get namespace | grep s6azure9227 | wc -l`
+        if [ $namespacePresent -eq 0 ]
+        then
+            echo `kubectl create namespace s6azure9227`
+        fi
+
+    - uses: azure/k8s-create-secret@v1
+      with:
+        namespace: s6azure9227
+        container-registry-url: s6project.azurecr.io
+        container-registry-username: ${{ secrets.acr_s6project_username }}
+        container-registry-password: ${{ secrets.acr_s6project_password }}
+        secret-name: s6azuredockerauth
+       
+    - uses: azure/k8s-deploy@v1.2
+      with:
+        namespace: s6azure9227
+        manifests: |
+          manifests/deployment.yml
+          manifests/service.yml
+          manifests/ingress.yml
+        images: |
+          s6project.azurecr.io/s6azure:${{ github.sha }}
+        imagepullsecrets: |
+          s6azuredockerauth
