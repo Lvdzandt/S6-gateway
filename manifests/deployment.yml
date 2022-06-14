@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "s6azure-e3ae"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "s6azure-e3ae"
+  template:
+    metadata:
+      labels:
+        app: "s6azure-e3ae"
+    spec:
+      containers:
+        - name: "s6azure-e3ae"
+          image: "s6project.azurecr.io/s6azure"
+          ports:
+          - containerPort: 8083
