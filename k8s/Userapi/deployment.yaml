@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: userapi
-          image: localhost:5000/api:v0.1
+          image: lucvdzandt/userapi:latest
           ports:
             - containerPort: 8081
           env:

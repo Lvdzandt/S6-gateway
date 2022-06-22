@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: userapi
-          image: localhost:5000/subredditapi:v0.1
+          image: lucvdzandt/subredditapi:latest
           ports:
             - containerPort: 8086
           env:

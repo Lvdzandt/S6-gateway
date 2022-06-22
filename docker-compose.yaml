@@ -79,6 +79,22 @@ services:
     depends_on:
       - zookeeper
 
+  keycloak:
+    image: quay.io/keycloak/keycloak:legacy
+    environment:
+      DB_VENDOR: MYSQL
+      DB_ADDR: db
+      DB_DATABASE: mysql
+      DB_USER: user
+      DB_PASSWORD: password
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: Pa55w0rd
+    restart: "on-failure"
+    ports:
+      - 8180:8080
+    depends_on:
+      - db
+
   user-service:
     build:
       context: "../userapi/"
@@ -100,7 +116,7 @@ services:
 
   subredditapi-service:
     build:
-      context: "../SubRedditapi/"
+      context: "../subreddit/"
       dockerfile: "Dockerfile"
     hostname: subreddit-service
     container_name: subreddit-service

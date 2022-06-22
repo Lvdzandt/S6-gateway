@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: localhost:5000/frontend:v0.1
+          image: lucvdzandt/frontend:latest
           ports:
             - containerPort: 3000
