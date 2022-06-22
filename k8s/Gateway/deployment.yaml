@@ -23,6 +23,12 @@ spec:
             - name: spring_cloud_gateway_routes_0_id
               value: userapi
             - name: spring_cloud_gateway_routes_0_uri
-              value: http://userapi-service:8081
+              value: userapi-service
             - name: spring_cloud_gateway_routes_0_predicates_0_
+              value: Path=/user/**
+            - name: spring_cloud_gateway_routes_1_id
+              value: userapi
+            - name: spring_cloud_gateway_routes_1_uri
+              value: userapi-service
+            - name: spring_cloud_gateway_routes_1_predicates_0_
               value: Path=/user/**

@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: "s6azure-d64a"
+    labels:
+        app: "s6azure-d64a"
+    annotations:
+        kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+    rules:
+        - host: s6azure0134-s6azure-d64a.f77f4838a7f94137b476.uksouth.aksapp.io
+          http:
+            paths:
+            - path: /
+              backend:
+                serviceName: "s6azure-d64a"
+                servicePort: 8083

@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "s6azure-d64a"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "s6azure-d64a"
+  template:
+    metadata:
+      labels:
+        app: "s6azure-d64a"
+    spec:
+      containers:
+        - name: "s6azure-d64a"
+          image: "s6project.azurecr.io/s6azure"
+          ports:
+          - containerPort: 8083
