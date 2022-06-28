@@ -43,7 +43,7 @@ services:
 
   gateway:
     build:
-     context: "../gateway/"
+     context: "../S6-gateway/"
      dockerfile: "Dockerfile"
     hostname: gateway
     container_name: gateway
@@ -97,7 +97,7 @@ services:
 
   user-service:
     build:
-      context: "../userapi/"
+      context: "../S6-userapi/"
       dockerfile: "Dockerfile"
     hostname: user-service
     container_name: user-service
@@ -110,6 +110,13 @@ services:
      - SPRING_DATASOURCE_PASSWORD=password
      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
      - SPRING_KAFKA_BOOTSTRAP-SERVERS=http://kafka:9092
+     - KEYCLOAK_AUTH-SERVER-URL=http://keycloak:8180/auth
+     - KEYCLOAK_realm=myrealm
+     - KEYCLOAK_RESOURCE=login-app
+     - KEYCLOAK_PUBLIC-client=true
+     - KEYCLOAK_SECURITY-CONSTRAINTS[0]_AUTHROLES[0]=user
+     - KEYCLOAK_SECURITY-CONSTRAINTS[0]_SECURITYCOLLECTIONS[0]_PATTERNS[0]=/user/*
+     - KEYCLOAK_PRINCIPAL-ATTRIBUTE=preferred_username
     depends_on:
       - db
       - gateway
@@ -134,7 +141,7 @@ services:
 
   frontend-gateway:
     build:
-      context: "../frontend/"
+      context: "../S6-frontend/"
       dockerfile: "Dockerfile"
     hostname: frontend
     container_name: frontend
