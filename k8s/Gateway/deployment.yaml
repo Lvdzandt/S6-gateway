@@ -23,12 +23,12 @@ spec:
             - name: spring_cloud_gateway_routes_0_id
               value: userapi
             - name: spring_cloud_gateway_routes_0_uri
-              value: userapi-service
+              value: userapi-service:8081
             - name: spring_cloud_gateway_routes_0_predicates_0_
               value: Path=/user/**
             - name: spring_cloud_gateway_routes_1_id
-              value: userapi
+              value: subredditapi
             - name: spring_cloud_gateway_routes_1_uri
-              value: userapi-service
+              value: subredditapi-service:8086
             - name: spring_cloud_gateway_routes_1_predicates_0_
-              value: Path=/user/**
+              value: Path=/subreddit/**
