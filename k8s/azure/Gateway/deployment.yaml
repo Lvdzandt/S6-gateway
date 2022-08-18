@@ -20,23 +20,5 @@ spec:
           ports:
             - containerPort: 8083
           env:
-            - name: keycloak_auth_server_ulr
-              value: "http://keycloak-service:8080/auth"
-            - name: keycloak_realm
-              value: "myrealm"
-            - name: keycloak_resource
-              value: "login-app"
-            - name: keycloak_public
-              value: "true"
-            - name: spring_cloud_gateway_routes_0_id
-              value: userapi
-            - name: spring_cloud_gateway_routes_0_uri
-              value: userapi-service:8081
-            - name: spring_cloud_gateway_routes_0_predicates_0_
-              value: Path=/user/**
-            - name: spring_cloud_gateway_routes_1_id
-              value: subredditapi
-            - name: spring_cloud_gateway_routes_1_uri
-              value: subredditapi-service:8086
-            - name: spring_cloud_gateway_routes_1_predicates_0_
-              value: Path=/subreddit/**
+            - name:
+              value:
