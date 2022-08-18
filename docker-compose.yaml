@@ -110,13 +110,6 @@ services:
      - SPRING_DATASOURCE_PASSWORD=password
      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
      - SPRING_KAFKA_BOOTSTRAP-SERVERS=http://kafka:9092
-     - KEYCLOAK_AUTH-SERVER-URL=http://keycloak:8180/auth
-     - KEYCLOAK_realm=myrealm
-     - KEYCLOAK_RESOURCE=login-app
-     - KEYCLOAK_PUBLIC-client=true
-     - KEYCLOAK_SECURITY-CONSTRAINTS[0]_AUTHROLES[0]=user
-     - KEYCLOAK_SECURITY-CONSTRAINTS[0]_SECURITYCOLLECTIONS[0]_PATTERNS[0]=/user/*
-     - KEYCLOAK_PRINCIPAL-ATTRIBUTE=preferred_username
     depends_on:
       - db
       - gateway
