@@ -20,8 +20,14 @@ spec:
           ports:
             - containerPort: 8083
           env:
-            - name: spring.security.oauth2.client.provider.my-keycloak-provider.issuer-uri
-              value: http://20.108.145.83:8080/auth/realms/myrealm
+            - name: keycloak_auth_server_ulr
+              value: "http://keycloak-service:8080/auth"
+            - name: keycloak_realm
+              value: "myrealm"
+            - name: keycloak_resource
+              value: "login-app"
+            - name: keycloak_public
+              value: "true"
             - name: spring_cloud_gateway_routes_0_id
               value: userapi
             - name: spring_cloud_gateway_routes_0_uri
