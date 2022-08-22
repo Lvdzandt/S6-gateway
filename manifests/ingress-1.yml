@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: "s6cluster-79ba"
+    labels:
+        app: "s6cluster-79ba"
+    annotations:
+        kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+    rules:
+        - host: default-s6cluster-79ba.babb3c4f7cf4443cb8fa.uksouth.aksapp.io
+          http:
+            paths:
+            - path: /
+              backend:
+                serviceName: "s6cluster-79ba"
+                servicePort: 8083
