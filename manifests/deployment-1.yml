@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "s6cluster-79ba"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "s6cluster-79ba"
+  template:
+    metadata:
+      labels:
+        app: "s6cluster-79ba"
+    spec:
+      containers:
+        - name: "s6cluster-79ba"
+          image: "s6clusterregistry.azurecr.io/s6cluster"
+          ports:
+          - containerPort: 8083
