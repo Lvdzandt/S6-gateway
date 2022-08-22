@@ -20,23 +20,23 @@ spec:
         ports:
         - containerPort: 8083
         env:
-        - name: spring.security.oauth2.client.provider.my-keycloak-provider.issuer-uri
-          value: http://20.108.145.83:8080/auth/realms/myrealm
-        - name: spring.security.oauth2.client.registration.keycloak-login-app.provider
-          value: my-keycloak-provider
-        - name: spring.security.oauth2.client.registration.keycloak-login-app.client-id
-          value: login-app
-        - name: spring.security.oauth2.client.registration.keycloak-login-app.authorization-grant-type
-          value: authorization_code
-        - name: spring_cloud_gateway_routes_0_id
-          value: userapi
-        - name: spring_cloud_gateway_routes_0_uri
-          value: userapi-service:8081
-        - name: spring_cloud_gateway_routes_0_predicates_0_
-          value: Path=/user/**
-        - name: spring_cloud_gateway_routes_1_id
-          value: subredditapi
-        - name: spring_cloud_gateway_routes_1_uri
-          value: subredditapi-service:8086
-        - name: spring_cloud_gateway_routes_1_predicates_0_
-          value: Path=/subreddit/**
+          - name: spring.security.oauth2.client.provider.my-keycloak-provider.issuer-uri
+            value: http://20.108.145.83:8080/auth/realms/myrealm
+          - name: spring.security.oauth2.client.registration.keycloak-login-app.provider
+            value: my-keycloak-provider
+          - name: spring.security.oauth2.client.registration.keycloak-login-app.client-id
+            value: login-app
+          - name: spring.security.oauth2.client.registration.keycloak-login-app.authorization-grant-type
+            value: authorization_code
+          - name: spring_cloud_gateway_routes_0_id
+            value: userapi
+          - name: spring_cloud_gateway_routes_0_uri
+            value: userapi-service:8081
+          - name: spring_cloud_gateway_routes_0_predicates_0_
+            value: Path=/user/**
+          - name: spring_cloud_gateway_routes_1_id
+            value: subredditapi
+          - name: spring_cloud_gateway_routes_1_uri
+            value: subredditapi-service:8086
+          - name: spring_cloud_gateway_routes_1_predicates_0_
+            value: Path=/subreddit/**
